@@ -5,12 +5,12 @@ import path from 'path'
 
 console.log(path.resolve(process.cwd(), './keys/jwks.json'))
 const withAllAccess = createNextAuthAllAccess({
-  issuer: 'http://localhost:3000',
+  issuer: 'zerodev',
   jwksPath: path.resolve(process.cwd(), './keys/jwks.json'),
   clients: [
     {
-      id: 'bolero:client',
-      audience: 'urn:bolero:client',
+      id: 'zerodev:client',
+      audience: 'urn:zerodev:client',
       expiration: '6h',
       // Optional whitelist — exp and iat will always be included
       allowedClaims: ['email', 'sub'],
