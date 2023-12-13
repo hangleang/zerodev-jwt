@@ -1,10 +1,10 @@
-import { useAccount } from 'wagmi'
+import { useAccount } from "wagmi";
 
-import { Account, Connect, NetworkSwitcher } from './components'
-import Layout from '../../components/layout'
+import { Account, Connect, NetworkSwitcher } from "../../components";
+import Layout from "../../components/layout";
 
 function Page() {
-  const { isConnected } = useAccount()
+  const { isConnected } = useAccount();
 
   return (
     <Layout>
@@ -19,7 +19,7 @@ function Page() {
         </>
       )}
     </Layout>
-  )
+  );
 }
 
-export default Page
+export default Page;
