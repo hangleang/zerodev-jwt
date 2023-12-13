@@ -18,13 +18,13 @@ export function Connect() {
     if (isAuthenticated && clientToken) {
       return new JWTWalletConnector({
         options: {
-          projectId: process.env.PROJECT_ID,
+          projectId:
+            process.env.PROJECT_ID || "8ff1126e-3958-4654-aea0-b9f024f64f9f",
           jwt: clientToken.accessToken,
         },
       });
     }
   }, [isAuthenticated, clientToken]);
-  console.log(isAuthenticated, clientToken);
 
   return (
     <div>
