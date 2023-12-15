@@ -3,6 +3,7 @@ import { useAccount, useConnect, useDisconnect } from "wagmi";
 import { useAllAccess } from "@takeshape/next-auth-all-access/react";
 import { JWTWalletConnector } from "@zerodevapp/wagmi";
 import { useSession } from "next-auth/react";
+import { options } from "../wagmi";
 
 export function Connect() {
   const { isAuthenticated, clientToken } = useAllAccess({
@@ -18,8 +19,7 @@ export function Connect() {
     if (isAuthenticated && clientToken) {
       return new JWTWalletConnector({
         options: {
-          projectId:
-            process.env.PROJECT_ID || "8ff1126e-3958-4654-aea0-b9f024f64f9f",
+          ...options,
           jwt: clientToken.accessToken,
         },
       });

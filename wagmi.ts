@@ -3,8 +3,8 @@ import { optimismGoerli } from "wagmi/chains";
 
 import { publicProvider } from "wagmi/providers/public";
 
-const options = {
-  options: { projectId: process.env.PROJECT_ID },
+export const options = {
+  options: { projectId: process.env.PROJECT_ID, shimDisconnect: true },
 };
 
 export const { chains, provider, webSocketProvider } = configureChains(
