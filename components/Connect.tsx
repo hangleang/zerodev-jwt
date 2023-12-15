@@ -3,7 +3,6 @@ import { useAccount, useConnect, useDisconnect } from "wagmi";
 import { useAllAccess } from "@takeshape/next-auth-all-access/react";
 import { JWTWalletConnector } from "@zerodevapp/wagmi";
 import { useSession } from "next-auth/react";
-import { options } from "../wagmi";
 
 export function Connect() {
   const { isAuthenticated, clientToken } = useAllAccess({
@@ -12,14 +11,17 @@ export function Connect() {
   });
 
   const { isConnected } = useAccount();
-  const { connect, error, isLoading, pendingConnector } = useConnect();
+  const { connectAsync, error, isLoading, pendingConnector } = useConnect();
   const { disconnect } = useDisconnect();
+  const { data: session, status } = useSession();
 
   const connector = useMemo(() => {
     if (isAuthenticated && clientToken) {
       return new JWTWalletConnector({
         options: {
-          ...options,
+          projectId:
+            process.env.PROJECT_ID || "8ff1126e-3958-4654-aea0-b9f024f64f9f",
+          // shimDisconnect: true,
           jwt: clientToken.accessToken,
         },
       });
@@ -30,13 +32,19 @@ export function Connect() {
     <div>
       <div>
         {isConnected && (
-          <button onClick={() => disconnect()}>
-            Disconnect from {connector?.name}
-          </button>
+          <>
+            <h4>{session?.user?.name || "what "}, is your name?</h4>
+            <button onClick={() => disconnect()}>
+              Disconnect from {connector?.name}
+            </button>
+          </>
         )}
         {!isConnected && (
-          <button onClick={() => connect({ connector })}>
-            Connect JWT Wallet
+          <button
+            onClick={() => connectAsync({ connector })}
+            disabled={isLoading}
+          >
+            {isLoading ? "Loading..." : "Connect JWT Wallet"}
           </button>
         )}
       </div>
