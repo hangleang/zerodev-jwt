@@ -11,7 +11,7 @@ export function Connect() {
   });
 
   const { isConnected } = useAccount();
-  const { connectAsync, error, isLoading, pendingConnector } = useConnect();
+  const { connect, error, isLoading, pendingConnector } = useConnect();
   const { disconnect } = useDisconnect();
   const { data: session, status } = useSession();
 
@@ -40,10 +40,7 @@ export function Connect() {
           </>
         )}
         {!isConnected && (
-          <button
-            onClick={() => connectAsync({ connector })}
-            disabled={isLoading}
-          >
+          <button onClick={() => connect({ connector })} disabled={isLoading}>
             {isLoading ? "Loading..." : "Connect JWT Wallet"}
           </button>
         )}
