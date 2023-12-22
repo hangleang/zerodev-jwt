@@ -26,62 +26,61 @@ const withAllAccess = createNextAuthAllAccess({
 export const authOptions: NextAuthOptions = {
   // https://next-auth.js.org/configuration/providers/oauth
   providers: [
-    process.env.VERCEL_ENV === "preview"
-      ? CredentialsProvider({
-          // The name to display on the sign in form (e.g. "Sign in with...")
-          name: "Email",
-          // `credentials` is used to generate a form on the sign in page.
-          // You can specify which fields should be submitted, by adding keys to the `credentials` object.
-          // e.g. domain, username, password, 2FA token, etc.
-          // You can pass any HTML attribute to the <input> tag through the object.
-          credentials: {
-            email: {
-              label: "Email",
-              type: "email",
-              placeholder: "willmith@example.com",
-            },
-            password: { label: "Password", type: "password" },
-          },
-          async authorize(credentials, req) {
-            // You need to provide your own logic here that takes the credentials
-            // submitted and returns either a object representing a user or value
-            // that is false/null if the credentials are invalid.
-            // e.g. return { id: 1, name: 'J Smith', email: 'jsmith@example.com' }
-            // You can also use the `req` object to obtain additional parameters
-            // (i.e., the request IP address)
-            const res = await fetch(`${backendBaseURL}/auth/login`, {
-              method: "POST",
-              body: JSON.stringify(credentials),
-              headers: { "Content-Type": "application/json" },
-            });
-            const loginRes = await res.json();
+    CredentialsProvider({
+      // The name to display on the sign in form (e.g. "Sign in with...")
+      name: "Email",
+      // `credentials` is used to generate a form on the sign in page.
+      // You can specify which fields should be submitted, by adding keys to the `credentials` object.
+      // e.g. domain, username, password, 2FA token, etc.
+      // You can pass any HTML attribute to the <input> tag through the object.
+      credentials: {
+        email: {
+          label: "Email",
+          type: "email",
+          placeholder: "willmith@example.com",
+        },
+        password: { label: "Password", type: "password" },
+      },
+      async authorize(credentials, req) {
+        // You need to provide your own logic here that takes the credentials
+        // submitted and returns either a object representing a user or value
+        // that is false/null if the credentials are invalid.
+        // e.g. return { id: 1, name: 'J Smith', email: 'jsmith@example.com' }
+        // You can also use the `req` object to obtain additional parameters
+        // (i.e., the request IP address)
+        const res = await fetch(`${backendBaseURL}/auth/login`, {
+          method: "POST",
+          body: JSON.stringify(credentials),
+          headers: { "Content-Type": "application/json" },
+        });
+        const loginRes = await res.json();
 
-            // If no error and we have user data, return it
-            if (res.ok && loginRes) {
-              const at = loginRes.data.accessToken;
-              const res = await fetch(`${backendBaseURL}/auth/me`, {
-                method: "GET",
-                headers: {
-                  accept: "*/*",
-                  Authorization: `Bearer ${at}`,
-                },
-              });
-              const user = (await res.json()).data;
-              return {
-                id: user.id,
-                name: user.username,
-                email: user.email,
-                image: user.imageUrl,
-              };
-            }
-            // Return null if user data could not be retrieved
-            return null;
-          },
-        })
-      : GoogleProvider({
-          clientId: process.env.GOOGLE_ID,
-          clientSecret: process.env.GOOGLE_SECRET,
-        }),
+        // If no error and we have user data, return it
+        if (res.ok && loginRes) {
+          const at = loginRes.data.accessToken;
+          const res = await fetch(`${backendBaseURL}/auth/me`, {
+            method: "GET",
+            headers: {
+              accept: "*/*",
+              Authorization: `Bearer ${at}`,
+            },
+          });
+          const user = (await res.json()).data;
+          return {
+            id: user.id,
+            name: user.username,
+            email: user.email,
+            image: user.imageUrl,
+          };
+        }
+        // Return null if user data could not be retrieved
+        return null;
+      },
+    }),
+    GoogleProvider({
+      clientId: process.env.GOOGLE_ID,
+      clientSecret: process.env.GOOGLE_SECRET,
+    }),
   ],
   theme: {
     colorScheme: "light",
