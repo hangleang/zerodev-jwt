@@ -34,6 +34,7 @@ export function Connect() {
         {isConnected && (
           <>
             <h4>{session?.user?.name || "what "}, is your name?</h4>
+            <h5>If not, why you still connected!</h5>
             <button onClick={() => disconnect()}>
               Disconnect from {connector?.name}
             </button>

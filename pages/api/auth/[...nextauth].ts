@@ -65,8 +65,13 @@ export const authOptions: NextAuthOptions = {
               Authorization: `Bearer ${at}`,
             },
           });
-          const user = await res.json();
-          return user.data;
+          const user = (await res.json()).data;
+          return {
+            id: user.id,
+            name: user.username,
+            email: user.email,
+            image: user.imageUrl,
+          };
         }
         // Return null if user data could not be retrieved
         return null;
