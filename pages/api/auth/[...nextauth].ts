@@ -14,7 +14,7 @@ const withAllAccess = createNextAuthAllAccess({
     {
       id: "zerodev:client",
       audience: "https://www.charii.org",
-      expiration: "6h",
+      expiration: "1d",
       // Optional whitelist — exp and iat will always be included
       allowedClaims: ["email", "sub"],
     },
