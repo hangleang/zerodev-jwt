@@ -1,6 +1,7 @@
 import createNextAuthAllAccess from "@takeshape/next-auth-all-access";
 import NextAuth, { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
+import FacebookProvider from "next-auth/providers/facebook";
 import CredentialsProvider from "next-auth/providers/credentials";
 import path from "path";
 
@@ -80,6 +81,10 @@ export const authOptions: NextAuthOptions = {
     GoogleProvider({
       clientId: process.env.GOOGLE_ID,
       clientSecret: process.env.GOOGLE_SECRET,
+    }),
+    FacebookProvider({
+      clientId: process.env.FB_APP_ID,
+      clientSecret: process.env.FB_APP_SECRET,
     }),
   ],
   theme: {
