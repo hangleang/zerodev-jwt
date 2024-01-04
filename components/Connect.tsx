@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { useAccount, useConnect, useDisconnect } from "wagmi";
 import { useAllAccess } from "@takeshape/next-auth-all-access/react";
-import { JWTWalletConnector } from "@zerodevapp/wagmi";
+import { JWTWalletConnector } from "@zerodev/wagmi";
 import { useSession } from "next-auth/react";
 
 export function Connect() {
