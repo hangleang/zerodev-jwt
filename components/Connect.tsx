@@ -20,7 +20,7 @@ export function Connect() {
       return new JWTWalletConnector({
         options: {
           projectId:
-            process.env.PROJECT_ID || "8ff1126e-3958-4654-aea0-b9f024f64f9f",
+            process.env.PROJECT_ID || "741a2474-8c99-44ea-84f2-430aa647068c",
           // shimDisconnect: true,
           jwt: clientToken.accessToken,
         },
