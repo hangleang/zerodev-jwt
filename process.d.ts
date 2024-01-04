@@ -12,7 +12,7 @@ declare namespace NodeJS {
     GOOGLE_SECRET: string;
     AUTH0_ID: string;
     AUTH0_SECRET: string;
-    PROJECT_ID: string;
+    NEXT_PUBLIC_PROJECT_ID: string;
     FB_APP_SECRET: string;
     FB_APP_ID: string;
   }
